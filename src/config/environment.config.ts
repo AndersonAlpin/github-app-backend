@@ -1,0 +1,5 @@
+export default () => ({
+  GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+  GITHUB_REDIRECT_URL: process.env.GITHUB_REDIRECT_URL,
+  GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+});
