@@ -1,22 +1,25 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Headers, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':token/:page')
-  async findAll(@Param('token') token: string, @Param('page') page: number) {
-    return await this.userService.findAll(token, page);
+  @Get()
+  async findAll(@Query('since') since: number, @Headers() headers: any) {
+    return await this.userService.findAll(since, headers.authorization);
   }
 
-  @Get('detail/:name/:token')
-  async findOne(@Param('name') name: string, @Param('token') token: string) {
-    return await this.userService.findOne(name, token);
+  @Get(':username/details')
+  async findOne(@Param('username') username: string, @Headers() headers: any) {
+    return await this.userService.findOne(username, headers.authorization);
   }
 
-  @Get('repos/:name/:token')
-  async findRepos(@Param('name') name: string, @Param('token') token: string) {
-    return await this.userService.findRepos(name, token);
+  @Get(':username/repos')
+  async findRepos(
+    @Param('username') username: string,
+    @Headers() headers: any,
+  ) {
+    return await this.userService.findRepos(username, headers.authorization);
   }
 }

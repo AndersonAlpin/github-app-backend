@@ -3,33 +3,33 @@ import { Octokit } from 'octokit';
 
 @Injectable()
 export class UserService {
-  async findAll(token: string, page: number) {
+  async findAll(since: number, auth: string) {
     try {
-      const octokit = new Octokit({ auth: token });
-      return await octokit.request('GET /users?since={page}', {
-        page,
+      const octokit = new Octokit({ auth });
+      return await octokit.request('GET /users?since={since}', {
+        number: since,
       });
     } catch (error) {
       throw new Error(error.response.data);
     }
   }
 
-  async findOne(name: string, token: string) {
+  async findOne(username: string, auth: string) {
     try {
-      const octokit = new Octokit({ auth: token });
+      const octokit = new Octokit({ auth });
       return await octokit.request('GET /users/{username}', {
-        username: name,
+        username,
       });
     } catch (error) {
       throw new Error(error.response.data);
     }
   }
 
-  async findRepos(name: string, token: string) {
+  async findRepos(username: string, auth: string) {
     try {
-      const octokit = new Octokit({ auth: token });
+      const octokit = new Octokit({ auth });
       return await octokit.request('GET /users/{username}/repos', {
-        username: name,
+        username,
       });
     } catch (error) {
       throw new Error(error.response.data);
