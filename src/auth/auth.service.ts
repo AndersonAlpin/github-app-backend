@@ -10,9 +10,7 @@ export class AuthService {
 
   async authenticate(code: string) {
     try {
-      console.log(code);
       const token = await this.getGitHubToken(code);
-      console.log(token);
       const { avatar_url, name } = await this.getUser(token);
       return { token, avatar_url, name };
     } catch (error) {
