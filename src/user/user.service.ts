@@ -7,7 +7,7 @@ export class UserService {
     try {
       const octokit = new Octokit({ auth });
       return await octokit.request('GET /users?since={since}', {
-        number: since,
+        since,
       });
     } catch (error) {
       throw new Error(error.response.data);
